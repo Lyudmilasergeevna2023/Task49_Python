@@ -93,19 +93,16 @@ def write_file(file_name):
         f_writer.writerows(res)
 
 
-def number_row(file_name):
-    row = int(input("Введите номер строки: "))
+def number_row(num):
     lst = read_file(file_name)
-    return lst[row]
+    return lst[num]
 
 
-def copying(file_name, file_name1):
-    res = read_file(file_name1)
-    res.append(number_row(file_name))
-    with open(file_name1, 'w', encoding='utf-8', newline='') as data:
+def copying(file_name1):
+    row = number_row(int(input("Введите номер строки: ")))
+    with open(file_name1, 'a', encoding='utf-8', newline='') as data:
         f_writer = DictWriter(data, fieldnames=['имя', 'фамилия', 'телефон'])
-        f_writer.writeheader()
-        f_writer.writerows(res)
+        f_writer.writerow(row)
 
 
 file_name = 'phone.csv'
@@ -129,7 +126,7 @@ def main():
         elif command == 'c':
             if not exists(file_name1):
                 create_file(file_name1)
-            copying(file_name, file_name1)
+            copying(file_name1)
             print(*read_file(file_name1))
 
 
